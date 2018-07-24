@@ -1,0 +1,51 @@
+using System.CodeDom.Compiler;
+using System.Collections.Generic;
+using System.Collections;
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.Serialization;
+using System.Text.RegularExpressions;
+using System.Text;
+using System;
+
+class Solution {
+
+    // Complete the commonChild function below.
+    static int commonChild(string s1, string s2) {
+        int size=s1.Length;
+        int [,] check= new int[size+1, size+1];
+        for(int itr=0;itr<size;itr++)
+        {
+            for(int j=0;j<size;j++)
+            {
+                 if(s1[itr]==s2[j])
+                 {
+                     check[itr+1, j+1]=check[itr, j]+1;
+                 }
+                else
+                {
+                    check[itr+1, j+1]=Math.Max(check[itr+1, j],check[itr, j+1]);
+                }
+            }
+        }
+        return check[s1.Length, s2.Length];
+    }  
+    static void Main(string[] args) {
+        TextWriter textWriter = new StreamWriter(@System.Environment.GetEnvironmentVariable("OUTPUT_PATH"), true);
+
+        string s1 = Console.ReadLine();
+
+        string s2 = Console.ReadLine();
+
+        int result = commonChild(s1, s2);
+
+        textWriter.WriteLine(result);
+
+        textWriter.Flush();
+        textWriter.Close();
+    }
+}
